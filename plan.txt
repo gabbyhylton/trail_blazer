@@ -1,0 +1,17 @@
+Week-by-Week Breakdown
+
+Week 1 — Setup & Map Foundation
+Set up your React project, integrate Leaflet, get the map rendering, and wire up geolocation 
+so it drops a pin on the user's current location.
+
+Week 2 — Route Generation
+Connect to OpenRouteService. Build the logic to randomly pick waypoints around the user at the chosen radius, 
+then request a walking route that loops back. This is the hardest and most impressive part.
+
+Week 3 — UI & User Experience
+Build out the controls (distance selector, "Generate Route" button), display stats, and make it look polished with Tailwind. 
+Add a "regenerate" button so users can get a different random path.
+
+Week 4 — Polish, Testing & Deploy
+Handle edge cases (location denied, API errors, no walkable path found), make it mobile-responsive, write a README, 
+and deploy to Vercel.
