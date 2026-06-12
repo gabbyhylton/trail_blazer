@@ -1,6 +1,8 @@
 import React, { useRef, useEffect, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
+import { generateWaypoints, createRoute } from "./routeHelpers";
 import "leaflet/dist/leaflet.css";
+import L from "leaflet";
 
 function Recenter({ position }) {
     const map = useMap();
@@ -10,9 +12,22 @@ function Recenter({ position }) {
 return null;
 };
 
+function NewRoute({ route }) {
+  const map = useMap();
+  useEffect(() => {
+    if (route && route.features) {
+      const coordinates = route.features[0].geometry.coordinates;
+      const latLngs = coordinates.map(([lng, lat]) => [lat, lng]);
+      window.L.polyline(latLngs, { color: 'blue', weight: 4 }).addTo(map);
+    }
+  }, [route, map]);
+  return null;
+}
+
 const SimpleMap = () => {
   const mapRef = useRef(null);
   const [position, setPosition] = useState([51.505, -0.09]);
+  const [route, setRoute] = useState(null);
 
   useEffect(() => {
     if (!("geolocation" in navigator)) {
@@ -29,6 +44,21 @@ const SimpleMap = () => {
     return () => navigator.geolocation.clearWatch(id);
   }, []);
 
+  // Generate route when position changes
+  useEffect(() => {
+    const generateRoute = async () => {
+      const waypoints = generateWaypoints(position, 5);
+      console.log('Waypoints:', waypoints);
+      if (waypoints) {
+        const routeData = await createRoute(waypoints);
+        console.log('Route data:', routeData);
+        setRoute(routeData);
+      }
+    };
+
+    generateRoute();
+  }, [position]);
+
   return (
       <MapContainer
         center={position}
@@ -44,6 +74,7 @@ const SimpleMap = () => {
         <Marker position={position}>
           <Popup>You are here</Popup>
         </Marker>
+        <NewRoute route={route} />
       </MapContainer>
   );
 };
