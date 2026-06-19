@@ -34,12 +34,12 @@ export function generateWaypoints(origin, distance) {
     }
 
     const [lon, lat] = origin;
-    const waypoints = [origin];
+    const waypoints = [[lon, lat]];
     const steps = 4;
     const circleboundary = createPolygon();
 
     for (let i = 1; i <= steps; i += 1) {
-        let newcoordinates = [lon + 0.001 * i, lat + 0.001 * i];
+        //let newcoordinates = [lon + 0.001 * i, lat + 0.001 * i];
         // let randomizeChecker = false
         // while (randomizeChecker == false) {
         //     if ((checkBoundary(circleboundary, newcoordinates)) !== true) {
@@ -50,13 +50,13 @@ export function generateWaypoints(origin, distance) {
         // }
         waypoints.push([lon + 0.001 * i, lat + 0.001 * i]);
     }
-    waypoints.push(origin);
+    waypoints.push([lon, lat]);
     console.log(waypoints);
     return waypoints;
 }
 
 export function checkBoundary(circle, coordinates) {
-    var pt = turf.point([coordinates[0], coordinates[1]]);
+    var pt = turf.point([coordinates[1], coordinates[0]]);
 
     if (turf.booleanPointInPolygon(pt, circle) == true) {
         return true;
@@ -97,5 +97,5 @@ export function createNewCoordinates(origin, coordinates) {
     // const lon = random(origin[1]);
 
     // if this isn't the best way, use the turf randomPoint
-    return [lat, lon];
+    return [lon, lat];
 }

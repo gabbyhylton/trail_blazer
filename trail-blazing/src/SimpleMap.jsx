@@ -45,9 +45,15 @@ const SimpleMap = () => {
   }, []);
 
   // Generate route when position changes
+  const test_points = [[42.342, -71.056], [42.336, -71.048], [42.336, -71.053], [42.342, -71.056]];
+  // coordinates need to be lng, lat not lat, lng
+  const test_points_correct = [[-71.056, 42.342], [-71.048, 42.336], [-71.053, 42.336], [-71.056, 42.342]];
+  
   useEffect(() => {
     const generateRoute = async () => {
-      const waypoints = generateWaypoints(position, 5);
+      const [lat, lng] = position;
+      const waypoints = generateWaypoints([lng, lat], 5);
+      //const waypoints = test_points_correct;
       console.log('Waypoints:', waypoints);
       if (waypoints) {
         const routeData = await createRoute(waypoints);
