@@ -12,16 +12,20 @@ export function calculateCircumference(radius = 5) {
     return circumference;
 }
 
-export function createPolygon() {
+export function createPolygon(origin) {
     // create a hexagon or other polygon to mimic a circle or the general radius of the circle
-    const center = [-71.0589, 42.3601];
-    const radius = 5;
+    //const center = [-71.0589, 42.3601];
+    if (!Array.isArray(origin)) {
+        throw new Error('Invalid center for polygon');
+    }
+
+    const radius = 0.5;
     const options = {
-        steps: 6, // number of sides
-        units: 'kilometers' // can be changed to others
+        steps: 64, // number of sides
+        units: 'kilometers', // can be changed to others
     };
 
-    const polygon = turf.circle(center, radius, options);
+    const polygon = turf.circle(origin, radius, options);
     return polygon;
 }
 
@@ -36,19 +40,15 @@ export function generateWaypoints(origin, distance) {
     const [lon, lat] = origin;
     const waypoints = [[lon, lat]];
     const steps = 4;
-    const circleboundary = createPolygon();
+    const circleboundary = createPolygon([lon, lat]);
 
+    const circle_coordinates = circleboundary.geometry.coordinates;
+    const circle_bbox = turf.bbox(circleboundary);
     for (let i = 1; i <= steps; i += 1) {
-        //let newcoordinates = [lon + 0.001 * i, lat + 0.001 * i];
-        // let randomizeChecker = false
-        // while (randomizeChecker == false) {
-        //     if ((checkBoundary(circleboundary, newcoordinates)) !== true) {
-        //         newcoordinates = createNewCoordinates(origin, newcoordinates);
-        //     } else {
-        //         randomizeChecker == true;
-        //     }
-        // }
-        waypoints.push([lon + 0.001 * i, lat + 0.001 * i]);
+        let random_position = turf.randomPosition(circle_bbox);
+        let [lon2, lat2] = [random_position[0], random_position[1]];
+
+        waypoints.push([lon2, lat2]);
     }
     waypoints.push([lon, lat]);
     console.log(waypoints);
@@ -99,3 +99,4 @@ export function createNewCoordinates(origin, coordinates) {
     // if this isn't the best way, use the turf randomPoint
     return [lon, lat];
 }
+

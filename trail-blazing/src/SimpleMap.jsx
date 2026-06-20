@@ -1,15 +1,29 @@
 import React, { useRef, useEffect, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
-import { generateWaypoints, createRoute } from "./routeHelpers";
+import { generateWaypoints, createRoute, createPolygon } from "./routeHelpers";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
 function Recenter({ position }) {
     const map = useMap();
+    // if (generatedRef.current) return;
+    // if (!position || position[0] == null) return;
+    
+    // generatedRef.current = true;
+    const circleRef = useRef(null);
     useEffect(() => {
-        if (position) map.setView(position, map.getZoom());
-    }, [position]);
-return null;
+        if (position) {
+          map.setView(position, map.getZoom());
+          const circleboundary = createPolygon([position[1], position[0]]);
+          const latLngs = circleboundary.geometry.coordinates[0].map(([lng, lat]) => [lat, lng]);
+          if (circleRef.current) {
+          map.removeLayer(circleRef.current);
+        }
+          circleRef.current = window.L.polygon(latLngs, { color: 'purple', weight: 4, fillOpacity: 0.1 }).addTo(map);
+        }
+        
+    }, [position, map]);
+    return;
 };
 
 function NewRoute({ route }) {
@@ -34,13 +48,27 @@ const SimpleMap = () => {
       console.error("Geolocation not available in this browser");
       return;
     }
-
-    const id = navigator.geolocation.watchPosition(
-        (pos) => setPosition([pos.coords.latitude, pos.coords.longitude]),
-        (err) => console.error("Geolocation error:", err.message),
-        { enableHighAccuracy: true, maximumAge: 5000, timeout: 10000 }
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        console.log("geo update", pos.coords.latitude, pos.coords.longitude);
+        const coords = [pos.coords.latitude, pos.coords.longitude];
+        setPosition([pos.coords.latitude, pos.coords.longitude]);
+        const waypoints = generateWaypoints([coords[1], coords[0]], 5);
+        const routeData = await createRoute(waypoints);
+        setRoute(routeData);
+      },
+      (err) => console.error("Geolocation error:", err.message),
+      { enableHighAccuracy: true, maximumAge: 5000, timeout: 10000 }
     );
 
+    const id = navigator.geolocation.watchPosition(
+      (pos) => {
+        console.log("watch position", pos.coords.latitude, pos.coords.longitude); 
+        setPosition([pos.coords.latitude, pos.coords.longitude]); 
+      },
+      (err) => console.error("Geolocation error:", err.message),
+      { enableHighAccuracy: true, maximumAge: 5000, timeout: 10000 }
+    );
     return () => navigator.geolocation.clearWatch(id);
   }, []);
 
@@ -48,18 +76,21 @@ const SimpleMap = () => {
   const test_points = [[42.342, -71.056], [42.336, -71.048], [42.336, -71.053], [42.342, -71.056]];
   // coordinates need to be lng, lat not lat, lng
   const test_points_correct = [[-71.056, 42.342], [-71.048, 42.336], [-71.053, 42.336], [-71.056, 42.342]];
-  
+  const generatedRef = useRef(false);
+
   useEffect(() => {
     const generateRoute = async () => {
-      const [lat, lng] = position;
-      const waypoints = generateWaypoints([lng, lat], 5);
+      if (generatedRef.current) return;
+      if (!position || position[0] == null) return;
+      
+      generatedRef.current = true;
+      //const [lat, lng] = position;
+      //const waypoints = generateWaypoints([lng, lat], 5);
       //const waypoints = test_points_correct;
-      console.log('Waypoints:', waypoints);
-      if (waypoints) {
-        const routeData = await createRoute(waypoints);
-        console.log('Route data:', routeData);
-        setRoute(routeData);
-      }
+      //console.log('Waypoints:', waypoints);
+      //const routeData = await createRoute(waypoints);
+      //console.log('Route data:', routeData);
+      //setRoute(routeData);
     };
 
     generateRoute();

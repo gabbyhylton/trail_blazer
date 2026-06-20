@@ -15,3 +15,13 @@ Add a "regenerate" button so users can get a different random path.
 Week 4 — Polish, Testing & Deploy
 Handle edge cases (location denied, API errors, no walkable path found), make it mobile-responsive, write a README, 
 and deploy to Vercel.
+
+
+Week 2 - Route Generation notes
+** This has actually taken me so much longer than two weeks because I've been giving varying time to it LOL
+** The route now appears on the map which is super important, but upon trying to get it to visualize at home, I ran into alot of issues
+** Taking into account geographical issues, such as water, or inaccesible areas
+** Right now I have no clue how to navigate that, but good to take into consideration
+** Now that the basic route generation works, I'm going to work on generating points within the area of the circle.
+
+**Update before Love Island: I'm having trouble seeing if the updated geo-location also goes to the route
