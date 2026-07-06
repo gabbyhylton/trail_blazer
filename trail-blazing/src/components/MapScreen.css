@@ -1,0 +1,32 @@
+.map-screen {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.map-screen h2,
+.map-screen p {
+  margin: 0;
+  text-align: center;
+}
+
+.map-frame {
+  width: 100%;
+  max-width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 3px solid #8a6830;
+}
+
+.map-frame .leaflet-container {
+  width: 100%;
+  height: 220px;
+}
+
+@media (max-width: 600px) {
+  .map-frame .leaflet-container {
+    height: 180px;
+  }
+}

@@ -1,0 +1,42 @@
+.tb-title {
+    font-size: large;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: black;
+}
+
+.tb-bg {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0ece4;
+    background-image: radial-gradient(#ccc 1px, transparent 1px);
+    background-size: 18px 18px;
+}
+
+.tb-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tb-board {
+    width: 480px;
+    min-height: 280px;
+    background: #c49a5a;
+    border-radius: 20px;
+    border: 5px solid #8a6830;
+    box-shadow: 4px 5px 0 #6b4f20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.tb-post {
+    width: 44px;
+    height: 70px;
+    background: #8a6830;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 3px 3px 0 #6b4f20;
+}

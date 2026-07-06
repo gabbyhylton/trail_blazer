@@ -101,7 +101,7 @@ const SimpleMap = () => {
         center={position}
         zoom={13}
         whenCreated={(mapInstance) => (mapRef.current = mapInstance)}
-        style={{ height: "50vw", width: "84vw" }}
+        style={{ height: "220px", width: "100%" }}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

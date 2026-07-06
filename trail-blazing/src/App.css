@@ -187,3 +187,13 @@
     border-right-color: var(--border);
   }
 }
+
+.app-bg {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0ece4;
+  background-image: radial-gradient(#ccc 1px, transparent 1px);
+  background-size: 20px 20px;
+}
