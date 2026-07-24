@@ -6,12 +6,14 @@
 
 .tb-bg {
     min-height: 100vh;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #f0ece4;
-    background-image: radial-gradient(#ccc 1px, transparent 1px);
-    background-size: 18px 18px;
+    background-image: url('../assets/landscape_design.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .tb-wrap {
