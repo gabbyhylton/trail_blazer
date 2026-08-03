@@ -1,16 +1,54 @@
-# React + Vite
+# Notes -- can be found in plan.txt
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Week-by-Week Breakdown
 
-Currently, two official plugins are available:
+Week 1 — Setup & Map Foundation
+Set up your React project, integrate Leaflet, get the map rendering, and wire up geolocation 
+so it drops a pin on the user's current location.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Week 2 — Route Generation
+Connect to OpenRouteService. Build the logic to randomly pick waypoints around the user at the chosen radius, 
+then request a walking route that loops back. This is the hardest and most impressive part.
 
-## React Compiler
+Week 3 — UI & User Experience
+Build out the controls (distance selector, "Generate Route" button), display stats, and make it look polished with Tailwind. 
+Add a "regenerate" button so users can get a different random path.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Week 4 — Polish, Testing & Deploy
+Handle edge cases (location denied, API errors, no walkable path found), make it mobile-responsive, write a README, 
+and deploy to Vercel.
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Week 2 - Route Generation notes
+** This has actually taken me so much longer than two weeks because I've been giving varying time to it LOL
+** The route now appears on the map which is super important, but upon trying to get it to visualize at home, I ran into alot of issues
+** Taking into account geographical issues, such as water, or inaccesible areas
+** Right now I have no clue how to navigate that, but good to take into consideration
+** Now that the basic route generation works, I'm going to work on generating points within the area of the circle.
+
+**Update before Love Island: I'm having trouble seeing if the updated geo-location also goes to the route
+**Fixed!!
+
+** Will bug fix later, I think making the UI will also help
+
+Week 3 -- UI & User Experience
+** Working on the UI finally -- but actually dreading it because I don't like my original design concept
+** Going to look like a Signboard, almost like finding a trail posting in the forest
+** Mockup Idea:
+** <App />
+    <Signboard />           the wooden board + post, always visible
+        <SplashScreen />    screen 1: title, tagline, start button
+        <InputScreen />     screen 2: distance input + generate button
+        <MapScreen />       screen 3: the map rendered inside the board
+
+** 1. Signboard.jsx + its CSS (visual shell, no logic)
+** 2. App.jsx with screen state (logic, no styling)
+** 3. SplashScreen.jsx (simplest screen, just static content)
+** 4. InputScreen.jsx (add the distance input)
+** 5. MapScreen.jsx (drop in your existing map)
+** 6. Style each screen to match the mockup
+
+** Got the UI to pop-up, the only thing is the map is swallowing the screen
+** Tomorrow (7/6): Review the UI implementations and see what I want to add to it/fix 
+    ** Right now biggest bug is the geo-location with the new UI, but that should be an easy fix
+    ** Additionally I want to clean up the UI and maybe add some grass or something, it's so boring right now
