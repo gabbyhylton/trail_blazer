@@ -1,6 +1,6 @@
 .tb-title {
     font-size: large;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: 'Festive', cursive;
     color: black;
 }
 
@@ -33,12 +33,35 @@
     align-items: center;
     justify-content: center;
     padding: 2rem;
+    padding-top: 20px;
+    margin-top: 150px;
 }
 
 .tb-post {
     width: 44px;
-    height: 70px;
+    height: 100px;
     background: #8a6830;
     border-radius: 0 0 4px 4px;
     box-shadow: 3px 3px 0 #6b4f20;
+}
+
+.festive-regular {
+  font-family: "Festive", cursive;
+  font-weight: 400;
+  font-size: 75px;
+  font-style: normal;
+}
+
+.ruge-boogie-regular {
+  font-family: "Ruge Boogie", cursive;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 30px;
+  color: black;
+}
+
+.btn-start {
+    margin-top: 20px;
+    font-family: "Ruge Boogie", cursive;
+    size: 30px;
 }
